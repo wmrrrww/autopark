@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:autopark"
         mc:Ignorable="d"
                 Title="Employees" Height="450" Width="800">
-    <Grid Margin="0,0,0,-1" Background="#FF485661">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190*"/>
             <ColumnDefinition Width="59*"/>

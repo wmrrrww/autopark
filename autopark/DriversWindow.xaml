@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopark"
         mc:Ignorable="d"
-                Title="Drivers" Height="450" Width="800">
+                                Title="Drivers" Height="450" Width="800">
     <Grid>
         <DataGrid x:Name="DriversGrid" AutoGenerateColumns="True" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300" Width="700" Margin="20"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,355,0,0" Height="40" Width="412" RenderTransformOrigin="0.5,0.5">
+            <Button Content="Добавить" Click="AddButton_Click" Width="130" Height="30" Background="#FFC2CBE3"/>
+            <Button Content="Изменить" Click="UpdateButton_Click" Width="130" Height="30" Margin="5" Background="#FFC2CBE3"/>
+            <Button Content="Удалить" Click="DeleteButton_Click" Width="130" Height="30" Background="#FFC2CBE3"/>
+        </StackPanel>
     </Grid>
 </Window>

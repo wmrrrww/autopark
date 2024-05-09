@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:autopark"
         mc:Ignorable="d"
         Title="Clients" Height="450" Width="800">
-    <Grid Margin="0,0,0,-1" Background="#FF485661">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190*"/>
             <ColumnDefinition Width="59*"/>
@@ -25,13 +25,13 @@
 
 
         </DataGrid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="187,359,0,0" Height="40" Width="413" RenderTransformOrigin="0.5,0.5">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,372,0,0" Height="40" Width="412" RenderTransformOrigin="0.5,0.5">
             <Button Content="Добавить" Click="AddButton_Click" Width="130" Height="30" Background="#FFC2CBE3"/>
             <Button Content="Изменить" Click="UpdateButton_Click" Width="130" Height="30" Margin="5" Background="#FFC2CBE3"/>
             <Button Content="Удалить" Click="DeleteButton_Click" Width="130" Height="30" Background="#FFC2CBE3"/>
         </StackPanel>
 
-        
+
 
 
     </Grid>
