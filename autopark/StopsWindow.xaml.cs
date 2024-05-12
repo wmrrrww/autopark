@@ -13,31 +13,28 @@ namespace autopark
         {
             InitializeComponent();
             _context = new auto_parkEntities();
-            LoadClientsData();
+            LoadStopsData();
         }
 
-        private void LoadClientsData()
+        private void LoadStopsData()
         {
-            StopsGrid.ItemsSource = _context.Остановки.ToList();
+            //StopsGrid.ItemsSource = _context.Остановки.ToList();
+            StopsGrid.ItemsSource = _context.Остановки.Include("Клиенты").ToList();
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Остановки selectedStop = (Остановки)StopsGrid.SelectedItem;
-
-                if (selectedStop != null)
-                {
-                    _context.SaveChanges();
-                    LoadClientsData();
-                }
+                _context.SaveChanges();
+                LoadStopsData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -54,21 +51,20 @@ namespace autopark
                         Местоположение = selectedStop.Местоположение,
                         Время_Прибытия = selectedStop.Время_Прибытия,
                         Время_Отправления = selectedStop.Время_Отправления,
-
                     };
 
                     _context.Остановки.Add(newStop);
                     _context.SaveChanges();
 
-                    LoadClientsData();
+                    LoadStopsData();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при сохранении данных: " + ex.InnerException?.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -76,21 +72,21 @@ namespace autopark
                 var selectedStop = StopsGrid.SelectedItem as Остановки;
                 if (selectedStop == null)
                 {
-                    MessageBox.Show("Пожалуйста, выберите клиента для удаления.");
+                    MessageBox.Show("Пожалуйста, выберите остановку для удаления.");
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этого клиента?", "Подтверждение удаления", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить эту остановку?", "Подтверждение удаления", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     _context.Остановки.Remove(selectedStop);
                     _context.SaveChanges();
-                    LoadClientsData();
+                    LoadStopsData();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ошибка при удалении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

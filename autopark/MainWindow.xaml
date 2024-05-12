@@ -20,6 +20,8 @@
             <Button Content="Аренда" Click="RentalsButton_Click" Margin="5"/>
             <Button Content="Автомобили" Click="CarsButton_Click" Margin="5"/>
             <Button Content="Услуги по обслуживанию" Click="ServicesButton_Click" Margin="5"/>
+            <Button Content="Отчет по продажам" Click="SalesReportButton_Click" Margin="5"/>
+            <Button Content="Отчет по аренде" Click="SalesReportButton_Click" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

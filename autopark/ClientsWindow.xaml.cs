@@ -41,33 +41,32 @@ namespace autopark
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        Клиенты selectedClient = (Клиенты)ClientsGrid.SelectedItem;
+
+        if (selectedClient != null)
         {
-            try
+            Клиенты newClient = new Клиенты
             {
-                Клиенты selectedClient = (Клиенты)ClientsGrid.SelectedItem;
+                ФИО = selectedClient.ФИО,
+                Почта = selectedClient.Почта,
+                Телефон = selectedClient.Телефон,
+                Адрес = selectedClient.Адрес,
+            };
 
-                if (selectedClient != null)
-                {
-                    Клиенты newClient = new Клиенты
-                    {
-                        ФИО = selectedClient.ФИО,
-                        Почта = selectedClient.Почта,
-                        Телефон = selectedClient.Телефон,
-                        Адрес = selectedClient.Адрес,
-                    };
+            _context.Клиенты.Add(newClient);
+            _context.SaveChanges();
 
-                    _context.Клиенты.Add(newClient);
-                    _context.SaveChanges();
-
-                    LoadClientsData();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка при сохранении данных: " + ex.InnerException?.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            }
+            LoadClientsData();
         }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
 
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)

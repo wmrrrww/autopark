@@ -18,7 +18,9 @@ namespace autopark
 
         private void LoadClientsData()
         {
-            RentalsGrid.ItemsSource = _context.Аренда.ToList();
+            //RentalsGrid.ItemsSource = _context.Аренда.ToList();
+            RentalsGrid.ItemsSource = _context.Аренда.Include("Клиенты").ToList();
+            RentalsGrid.ItemsSource = _context.Аренда.Include("Автомобили").ToList();
         }
 
 

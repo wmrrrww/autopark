@@ -15,7 +15,7 @@
         <DataGrid x:Name="EmployeesGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="775" Margin="5,4,0,0" Grid.ColumnSpan="2">
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="ID Сотрудника" Binding="{Binding  ID_Сотрудника}" />
+                <!--<DataGridTextColumn Header="ID Сотрудника" Binding="{Binding  ID_Сотрудника}" />-->
                 <DataGridTextColumn Header="ФИО" Binding="{Binding ФИО}" />
                 <DataGridTextColumn Header="Должность" Binding="{Binding Должность}" />
                 <DataGridTextColumn Header="Телефон" Binding="{Binding Телефон}" />

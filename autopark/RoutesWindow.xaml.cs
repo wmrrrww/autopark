@@ -13,31 +13,28 @@ namespace autopark
         {
             InitializeComponent();
             _context = new auto_parkEntities();
-            LoadClientsData();
+            LoadRoutesData();
         }
 
-        private void LoadClientsData()
+        private void LoadRoutesData()
         {
-            RoutesGrid.ItemsSource = _context.Маршруты.ToList();
+            //RoutesGrid.ItemsSource = _context.Маршруты.ToList();
+            RoutesGrid.ItemsSource = _context.Маршруты.Include("Клиенты").Include("Остановки").ToList();
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Маршруты selectedRoute = (Маршруты)RoutesGrid.SelectedItem;
-
-                if (selectedRoute != null)
-                {
-                    _context.SaveChanges();
-                    LoadClientsData();
-                }
+                _context.SaveChanges();
+                MessageBox.Show("Данные успешно сохранены.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -55,21 +52,20 @@ namespace autopark
                         Начальная_Точка = selectedRoute.Начальная_Точка,
                         Конечная_Точка = selectedRoute.Конечная_Точка,
                         Расстояние = selectedRoute.Расстояние,
-
                     };
 
                     _context.Маршруты.Add(newRoute);
                     _context.SaveChanges();
 
-                    LoadClientsData();
+                    LoadRoutesData();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при сохранении данных: " + ex.InnerException?.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -77,21 +73,21 @@ namespace autopark
                 var selectedRoute = RoutesGrid.SelectedItem as Маршруты;
                 if (selectedRoute == null)
                 {
-                    MessageBox.Show("Пожалуйста, выберите клиента для удаления.");
+                    MessageBox.Show("Пожалуйста, выберите маршрут для удаления.");
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этого клиента?", "Подтверждение удаления", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этот маршрут?", "Подтверждение удаления", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     _context.Маршруты.Remove(selectedRoute);
                     _context.SaveChanges();
-                    LoadClientsData();
+                    LoadRoutesData();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ошибка при удалении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

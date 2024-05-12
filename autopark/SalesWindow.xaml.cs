@@ -13,31 +13,29 @@ namespace autopark
         {
             InitializeComponent();
             _context = new auto_parkEntities();
-            LoadClientsData();
+            LoadSalesData();
         }
 
-        private void LoadClientsData()
+        private void LoadSalesData()
         {
-            SalesGrid.ItemsSource = _context.Продажи.ToList();
+            //SalesGrid.ItemsSource = _context.Продажи.ToList();
+            SalesGrid.ItemsSource = _context.Продажи.Include("Клиенты").ToList();
+            SalesGrid.ItemsSource = _context.Продажи.Include("Автомобили").ToList();
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Продажи selectedSale = (Продажи)SalesGrid.SelectedItem;
-
-                if (selectedSale != null)
-                {
-                    _context.SaveChanges();
-                    LoadClientsData();
-                }
+                _context.SaveChanges();
+                LoadSalesData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -54,13 +52,12 @@ namespace autopark
                         Дата_Продажи = selectedSale.Дата_Продажи,
                         Цена = selectedSale.Цена,
                         Способ_Оплаты = selectedSale.Способ_Оплаты,
-
                     };
 
                     _context.Продажи.Add(newSale);
                     _context.SaveChanges();
 
-                    LoadClientsData();
+                    LoadSalesData();
                 }
             }
             catch (Exception ex)
@@ -69,6 +66,7 @@ namespace autopark
 
             }
         }
+
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -76,21 +74,21 @@ namespace autopark
                 var selectedSale = SalesGrid.SelectedItem as Продажи;
                 if (selectedSale == null)
                 {
-                    MessageBox.Show("Пожалуйста, выберите клиента для удаления.");
+                    MessageBox.Show("Пожалуйста, выберите продажу для удаления.");
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этого клиента?", "Подтверждение удаления", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить эту продажу?", "Подтверждение удаления", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     _context.Продажи.Remove(selectedSale);
                     _context.SaveChanges();
-                    LoadClientsData();
+                    LoadSalesData();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ошибка при удалении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

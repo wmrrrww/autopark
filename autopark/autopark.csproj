@@ -90,6 +90,12 @@
     <Compile Include="RentalsWindow.xaml.cs">
       <DependentUpon>RentalsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ReportPayments.xaml.cs">
+      <DependentUpon>ReportPayments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReportRentals.xaml.cs">
+      <DependentUpon>ReportRentals.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RoutesWindow.xaml.cs">
       <DependentUpon>RoutesWindow.xaml</DependentUpon>
     </Compile>
@@ -172,6 +178,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RentalsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportPayments.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportRentals.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

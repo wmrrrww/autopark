@@ -10,9 +10,9 @@
         <DataGrid x:Name="RentalsGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="775" Margin="5,4,0,0">
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="ID Аренды" Binding="{Binding ID_Аренды}" />
-                <DataGridTextColumn Header="ID Клиента" Binding="{Binding ID_Клиента}" />
-                <DataGridTextColumn Header="ID Автомобиля" Binding="{Binding ID_Автомобиля}" />
+                <!--<DataGridTextColumn Header="ID Аренды" Binding="{Binding ID_Аренды}" />-->
+                <DataGridTextColumn Header="Клиент" Binding="{Binding Клиенты.ФИО}" />
+                <DataGridTextColumn Header="Автомобиль" Binding="{Binding Автомобили.Марка}" />
                 <DataGridTextColumn Header="Дата Начала Аренды" Binding="{Binding Дата_Начала_Аренды}" />
                 <DataGridTextColumn Header="Дата Конца Аренды" Binding="{Binding Дата_Конца_Аренды}" />
                 <DataGridTextColumn Header="Арендная Плата" Binding="{Binding Арендная_Плата}" />

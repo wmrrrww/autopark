@@ -10,7 +10,7 @@
         <DataGrid x:Name="CarsGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="350" Width="775" Margin="5,4,0,0">
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="ID Автомобиля" Binding="{Binding ID_Автомобиля}" />
+                <!--<DataGridTextColumn Header="ID Автомобиля" Binding="{Binding ID_Автомобиля}" />-->
                 <DataGridTextColumn Header="Марка" Binding="{Binding Марка}" />
                 <DataGridTextColumn Header="Модель" Binding="{Binding Модель}" />
                 <DataGridTextColumn Header="Год" Binding="{Binding Год}" />

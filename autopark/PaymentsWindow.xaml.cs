@@ -25,13 +25,8 @@ namespace autopark
         {
             try
             {
-                Платежи selectedPayment = (Платежи)PaymentsGrid.SelectedItem;
-
-                if (selectedPayment != null)
-                {
-                    _context.SaveChanges();
-                    LoadClientsData();
-                }
+                _context.SaveChanges();
+                LoadClientsData();
             }
             catch (Exception ex)
             {
@@ -49,14 +44,10 @@ namespace autopark
                 {
                     Платежи newPayment = new Платежи
                     {
-                        ID_Платежа = selectedPayment.ID_Платежа,
-                        ID_Сотрудника = selectedPayment.ID_Сотрудника,
-                        ID_Клиента = selectedPayment.ID_Клиента,
                         Сумма = selectedPayment.Сумма,
                         Дата_Платежа = selectedPayment.Дата_Платежа,
                         Номер_Счета = selectedPayment.Номер_Счета,
                         Метод_Оплаты = selectedPayment.Метод_Оплаты,
-
                     };
 
                     _context.Платежи.Add(newPayment);
@@ -68,10 +59,8 @@ namespace autopark
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при сохранении данных: " + ex.InnerException?.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
         }
-
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -80,21 +69,21 @@ namespace autopark
                 var selectedPayment = PaymentsGrid.SelectedItem as Платежи;
                 if (selectedPayment == null)
                 {
-                    MessageBox.Show("Пожалуйста, выберите клиента для удаления.");
+                    MessageBox.Show("Пожалуйста, выберите платеж для удаления.");
                     return;
                 }
 
-                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этого клиента?", "Подтверждение удаления", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите удалить этот платеж?", "Подтверждение удаления", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _context.Платежи.Remove(selectedPayment);
+                    _context.Entry(selectedPayment).State = System.Data.Entity.EntityState.Deleted;
                     _context.SaveChanges();
                     LoadClientsData();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Ошибка при удалении данных: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

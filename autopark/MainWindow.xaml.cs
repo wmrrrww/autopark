@@ -116,5 +116,11 @@ namespace autopark
         {
             //удаление записи из базы данных
         }
+
+        private void SalesReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReportPayments reportPaymentsWindow = new ReportPayments();
+            reportPaymentsWindow.ShowDialog();
+        }
     }
 }

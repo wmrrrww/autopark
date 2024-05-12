@@ -18,10 +18,7 @@ namespace autopark
 
         private void LoadData()
         {
-            using (var context = new auto_parkEntities())
-            {
-                EmployeesGrid.ItemsSource = context.Сотрудники.ToList();
-            }
+            EmployeesGrid.ItemsSource = _context.Сотрудники.ToList();
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
@@ -41,20 +38,23 @@ namespace autopark
         {
             try
             {
-                Сотрудники selectedEmployees = (Сотрудники)EmployeesGrid.SelectedItem;
+                Сотрудники selectedEmployee = (Сотрудники)EmployeesGrid.SelectedItem;
 
-                if (selectedEmployees != null)
+                if (selectedEmployee != null)
                 {
-                    Сотрудники newEmployees = new Сотрудники
+                    using (var context = new auto_parkEntities())
                     {
-                        ФИО = selectedEmployees.ФИО,
-                        Должность = selectedEmployees.Должность,
-                        Телефон = selectedEmployees.Телефон,
-                        Почта = selectedEmployees.Почта,
-                    };
+                        Сотрудники newEmployee = new Сотрудники
+                        {
+                            ФИО = selectedEmployee.ФИО,
+                            Должность = selectedEmployee.Должность,
+                            Телефон = selectedEmployee.Телефон,
+                            Почта = selectedEmployee.Почта,
+                        };
 
-                    _context.Сотрудники.Add(newEmployees);
-                    _context.SaveChanges();
+                        context.Сотрудники.Add(newEmployee);
+                        context.SaveChanges();
+                    }
 
                     LoadData();
                 }
@@ -91,3 +91,4 @@ namespace autopark
         }
     }
 }
+

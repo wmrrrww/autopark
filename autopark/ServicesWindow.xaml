@@ -5,9 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:autopark"
         mc:Ignorable="d"
-                                Title="Services" Height="450" Width="800">
+        Title="Services" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="ServicesGrid" AutoGenerateColumns="True" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300" Width="700" Margin="20"/>
+        <DataGrid x:Name="ServicesGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="300" Width="700" Margin="20">
+            <DataGrid.Columns>
+                <!--<DataGridTextColumn Header="ID Услуги" Binding="{Binding ID_Услуги}" />-->
+                <DataGridTextColumn Header="Автомобиль" Binding="{Binding Автомобили.Марка}" />
+                <DataGridTextColumn Header="Модель" Binding="{Binding Автомобили.Модель}" />
+                <DataGridTextColumn Header="Название Услуги" Binding="{Binding Название_Услуги}" />
+                <DataGridTextColumn Header="Дата Начала Работ" Binding="{Binding Дата_Начала_Работ}" />
+                <DataGridTextColumn Header="Дата Окончания Работ" Binding="{Binding Дата_Окончания_Работ}" />
+                <DataGridTextColumn Header="Цена" Binding="{Binding Цена}" />
+            </DataGrid.Columns>
+        </DataGrid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="187,359,0,0" Height="40" Width="413" RenderTransformOrigin="0.5,0.5">
             <Button Content="Добавить" Click="AddButton_Click" Width="130" Height="30" Background="#FFC2CBE3"/>
             <Button Content="Изменить" Click="UpdateButton_Click" Width="130" Height="30" Margin="5" Background="#FFC2CBE3"/>
