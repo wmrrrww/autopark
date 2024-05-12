@@ -26,3 +26,345 @@ namespace autopark
         public virtual Сотрудники Сотрудники { get; set; }
     }
 }
+
+
+//скрипт бд
+USE [master]
+GO
+/****** Object:  Database [auto_park]    Script Date: 09.05.2024 21:24:05 ******/
+CREATE DATABASE [auto_park]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'auto_park', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\auto_park.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'auto_park_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\auto_park_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [auto_park] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [auto_park].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [auto_park] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [auto_park] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [auto_park] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [auto_park] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [auto_park] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [auto_park] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [auto_park] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [auto_park] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [auto_park] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [auto_park] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [auto_park] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [auto_park] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [auto_park] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [auto_park] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [auto_park] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [auto_park] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [auto_park] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [auto_park] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [auto_park] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [auto_park] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [auto_park] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [auto_park] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [auto_park] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [auto_park] SET  MULTI_USER 
+GO
+ALTER DATABASE [auto_park] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [auto_park] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [auto_park] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [auto_park] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [auto_park] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [auto_park] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [auto_park] SET QUERY_STORE = OFF
+GO
+USE [auto_park]
+GO
+/****** Object:  Table [dbo].[Автомобили]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Автомобили](
+	[ID_Автомобиля] [int] NOT NULL,
+	[Марка] [nvarchar](max) NOT NULL,
+	[Модель] [nvarchar](max) NOT NULL,
+	[Год] [int] NOT NULL,
+	[Цвет] [nvarchar](max) NOT NULL,
+	[Цена_Продажи] [int] NOT NULL,
+	[Цена_Аренды] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Автомобили] PRIMARY KEY CLUSTERED 
+(
+	[ID_Автомобиля] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Аренда]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Аренда](
+	[ID_Аренды] [int] NOT NULL,
+	[ID_Клиента] [int] NOT NULL,
+	[ID_Автомобиля] [int] NOT NULL,
+	[Дата_Начала_Аренды] [datetime] NOT NULL,
+	[Дата_Конца_Аренды] [datetime] NOT NULL,
+	[Арендная_Плата] [nvarchar](50) NOT NULL,
+	[Количество_Часов] [nvarchar](50) NOT NULL,
+	[Способ_Оплаты] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Аренда] PRIMARY KEY CLUSTERED 
+(
+	[ID_Аренды] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Водители]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Водители](
+	[ID_Водителя] [int] NOT NULL,
+	[ФИО] [nvarchar](max) NOT NULL,
+	[ID_Маршрута] [int] NOT NULL,
+	[Номер_ВУ] [nvarchar](50) NOT NULL,
+	[Телефон] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Водители] PRIMARY KEY CLUSTERED 
+(
+	[ID_Водителя] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Клиенты]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Клиенты](
+	[ID_Клиента] [int] NOT NULL,
+	[ФИО] [nvarchar](max) NOT NULL,
+	[Почта] [nvarchar](max) NOT NULL,
+	[Телефон] [nvarchar](50) NOT NULL,
+	[Адрес] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Клиенты] PRIMARY KEY CLUSTERED 
+(
+	[ID_Клиента] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Маршруты]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Маршруты](
+	[ID_Маршрута] [int] NOT NULL,
+	[ID_Клиента] [int] NOT NULL,
+	[ID_Остановки] [int] NOT NULL,
+	[Название_Маршрута] [nvarchar](max) NOT NULL,
+	[Начальная_Точка] [nvarchar](max) NOT NULL,
+	[Конечная_Точка] [nvarchar](max) NOT NULL,
+	[Расстояние] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Маршруты] PRIMARY KEY CLUSTERED 
+(
+	[ID_Маршрута] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Остановки]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Остановки](
+	[ID_Остановки] [int] NOT NULL,
+	[ID_Клиента] [int] NULL,
+	[Название_Остановки] [nvarchar](max) NOT NULL,
+	[Местоположение] [nvarchar](max) NOT NULL,
+	[Время_Прибытия] [datetime] NOT NULL,
+	[Время_Отправления] [datetime] NOT NULL,
+ CONSTRAINT [PK_Остановки] PRIMARY KEY CLUSTERED 
+(
+	[ID_Остановки] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Остановки_Маршруты]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Остановки_Маршруты](
+	[ID_Остановки_Маршрута] [int] NOT NULL,
+	[ID_Остановки] [int] NULL,
+	[ID_Маршрута] [int] NULL,
+ CONSTRAINT [PK_Остановки_Маршруты] PRIMARY KEY CLUSTERED 
+(
+	[ID_Остановки_Маршрута] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Платежи]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Платежи](
+	[ID_Платежа] [int] NOT NULL,
+	[ID_Сотрудника] [int] NOT NULL,
+	[ID_Клиента] [int] NOT NULL,
+	[Сумма] [nvarchar](10) NOT NULL,
+	[Дата_Платежа] [date] NOT NULL,
+	[Номер_Счета] [nvarchar](50) NOT NULL,
+	[Метод_Оплаты] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Платежи] PRIMARY KEY CLUSTERED 
+(
+	[ID_Платежа] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Продажи]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Продажи](
+	[ID_Цены] [int] NOT NULL,
+	[ID_Клиента] [int] NOT NULL,
+	[ID_Автомобиля] [int] NOT NULL,
+	[Дата_Продажи] [date] NOT NULL,
+	[Цена] [int] NOT NULL,
+	[Способ_Оплаты] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Продажи] PRIMARY KEY CLUSTERED 
+(
+	[ID_Цены] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Сотрудники]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Сотрудники](
+	[ID_Сотрудника] [int] NOT NULL,
+	[ФИО] [nvarchar](max) NOT NULL,
+	[Должность] [nvarchar](max) NOT NULL,
+	[Телефон] [nvarchar](50) NOT NULL,
+	[Почта] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Сотрудники] PRIMARY KEY CLUSTERED 
+(
+	[ID_Сотрудника] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Услуги_По_Обслуживанию]    Script Date: 09.05.2024 21:24:05 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Услуги_По_Обслуживанию](
+	[ID_Услуги] [int] NOT NULL,
+	[ID_Автомобиля] [int] NOT NULL,
+	[Название_Услуги] [nvarchar](max) NOT NULL,
+	[Дата_Начала_Работ] [datetime] NOT NULL,
+	[Дата_Окончания_Работ] [datetime] NOT NULL,
+	[Цена] [int] NOT NULL,
+ CONSTRAINT [PK_Услуги_По_Обслуживанию] PRIMARY KEY CLUSTERED 
+(
+	[ID_Услуги] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Аренда]  WITH CHECK ADD  CONSTRAINT [FK_Аренда_Автомобили] FOREIGN KEY([ID_Автомобиля])
+REFERENCES [dbo].[Автомобили] ([ID_Автомобиля])
+GO
+ALTER TABLE [dbo].[Аренда] CHECK CONSTRAINT [FK_Аренда_Автомобили]
+GO
+ALTER TABLE [dbo].[Аренда]  WITH CHECK ADD  CONSTRAINT [FK_Аренда_Клиенты] FOREIGN KEY([ID_Клиента])
+REFERENCES [dbo].[Клиенты] ([ID_Клиента])
+GO
+ALTER TABLE [dbo].[Аренда] CHECK CONSTRAINT [FK_Аренда_Клиенты]
+GO
+ALTER TABLE [dbo].[Водители]  WITH CHECK ADD  CONSTRAINT [FK_Водители_Маршруты] FOREIGN KEY([ID_Маршрута])
+REFERENCES [dbo].[Маршруты] ([ID_Маршрута])
+GO
+ALTER TABLE [dbo].[Водители] CHECK CONSTRAINT [FK_Водители_Маршруты]
+GO
+ALTER TABLE [dbo].[Маршруты]  WITH CHECK ADD  CONSTRAINT [FK_Маршруты_Клиенты] FOREIGN KEY([ID_Клиента])
+REFERENCES [dbo].[Клиенты] ([ID_Клиента])
+GO
+ALTER TABLE [dbo].[Маршруты] CHECK CONSTRAINT [FK_Маршруты_Клиенты]
+GO
+ALTER TABLE [dbo].[Остановки_Маршруты]  WITH CHECK ADD  CONSTRAINT [FK_Остановки_Маршруты_Маршруты] FOREIGN KEY([ID_Маршрута])
+REFERENCES [dbo].[Маршруты] ([ID_Маршрута])
+GO
+ALTER TABLE [dbo].[Остановки_Маршруты] CHECK CONSTRAINT [FK_Остановки_Маршруты_Маршруты]
+GO
+ALTER TABLE [dbo].[Остановки_Маршруты]  WITH CHECK ADD  CONSTRAINT [FK_Остановки_Маршруты_Остановки] FOREIGN KEY([ID_Остановки])
+REFERENCES [dbo].[Остановки] ([ID_Остановки])
+GO
+ALTER TABLE [dbo].[Остановки_Маршруты] CHECK CONSTRAINT [FK_Остановки_Маршруты_Остановки]
+GO
+ALTER TABLE [dbo].[Платежи]  WITH CHECK ADD  CONSTRAINT [FK_Платежи_Клиенты] FOREIGN KEY([ID_Клиента])
+REFERENCES [dbo].[Клиенты] ([ID_Клиента])
+GO
+ALTER TABLE [dbo].[Платежи] CHECK CONSTRAINT [FK_Платежи_Клиенты]
+GO
+ALTER TABLE [dbo].[Платежи]  WITH CHECK ADD  CONSTRAINT [FK_Платежи_Сотрудники] FOREIGN KEY([ID_Сотрудника])
+REFERENCES [dbo].[Сотрудники] ([ID_Сотрудника])
+GO
+ALTER TABLE [dbo].[Платежи] CHECK CONSTRAINT [FK_Платежи_Сотрудники]
+GO
+ALTER TABLE [dbo].[Продажи]  WITH CHECK ADD  CONSTRAINT [FK_Продажи_Автомобили] FOREIGN KEY([ID_Автомобиля])
+REFERENCES [dbo].[Автомобили] ([ID_Автомобиля])
+GO
+ALTER TABLE [dbo].[Продажи] CHECK CONSTRAINT [FK_Продажи_Автомобили]
+GO
+ALTER TABLE [dbo].[Продажи]  WITH CHECK ADD  CONSTRAINT [FK_Продажи_Клиенты] FOREIGN KEY([ID_Клиента])
+REFERENCES [dbo].[Клиенты] ([ID_Клиента])
+GO
+ALTER TABLE [dbo].[Продажи] CHECK CONSTRAINT [FK_Продажи_Клиенты]
+GO
+ALTER TABLE [dbo].[Услуги_По_Обслуживанию]  WITH CHECK ADD  CONSTRAINT [FK_Услуги_По_Обслуживанию_Автомобили] FOREIGN KEY([ID_Автомобиля])
+REFERENCES [dbo].[Автомобили] ([ID_Автомобиля])
+GO
+ALTER TABLE [dbo].[Услуги_По_Обслуживанию] CHECK CONSTRAINT [FK_Услуги_По_Обслуживанию_Автомобили]
+GO
+USE [master]
+GO
+ALTER DATABASE [auto_park] SET  READ_WRITE 
+GO
+
